@@ -1,8 +1,3 @@
-# marker cluster demo
-
-![](./demo.gif)
-
-```js
 document.addEventListener("deviceready", function () {
 
     var mapDiv = document.getElementById("map_canvas");
@@ -27,8 +22,8 @@ function onMapReady() {
     // Providing all locations at the creating is the best.
     //------------------------------------------------------
     map.addMarkerCluster({
-      //debug: true,
       //maxZoomLevel: 5,
+      boundsDraw: true,
       markers: data,
       icons: [
           {min: 2, max: 100, url: "./img/blue.png", anchor: {x: 16, y: 16}},
@@ -43,7 +38,7 @@ function onMapReady() {
         //-----------------------------------------------------------------------
         markerCluster.on("resolution_changed", function (prev, newResolution) {
             var self = this;
-            label.innerHTML = "<b>zoom = " + self.get("zoom") + ", resolution = " + self.get("resolution") + "</b>";
+            label.innerHTML = "<b>zoom = " + self.get("zoom").toFixed(0) + ", resolution = " + self.get("resolution") + "</b>";
         });
         markerCluster.trigger("resolution_changed");
 
@@ -87,4 +82,3 @@ function onMapReady() {
     });
 
 }
-```
