@@ -16,32 +16,61 @@
 
 
 
-<script>
 
-      function geolocation() {
-       
-        GeoMarker = new GeolocationMarker();
-        GeoMarker.setCircleOptions({fillColor: '#808080'});
+    <script type="text/javascript">
+var map;
+document.addEventListener("deviceready", function() {
+  var div = document.getElementById("map_canvas");
 
-        google.maps.event.addListenerOnce(GeoMarker, 'position_changed', function() {
-          map.setCenter(this.getPosition());
-          map.fitBounds(this.getBounds());
-        });
+  // Initialize the map view
+  map = plugin.google.maps.Map.getMap(div);
 
-        google.maps.event.addListener(GeoMarker, 'geolocation_error', function(e) {
-          alert('There was an error obtaining your position. Message: ' + e.message);
-        });
+  // Wait until the map is ready status.
+  map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
+}, false);
 
-        GeoMarker.setMap(map);
-      }
+function onMapReady() {
+  var button = document.getElementById("button");
+  button.addEventListener("click", onButtonClick);
+}
 
-      google.maps.event.addDomListener(window, 'load', initialize);
+function onButtonClick() {
 
-      if(!navigator.geolocation) {
-        alert('Your browser does not support geolocation');
-      }    
+  // Move to the position with animation
+  map.animateCamera({
+    target: {lat: 37.422359, lng: -122.084344},
+    zoom: 17,
+    tilt: 60,
+    bearing: 140,
+    duration: 5000
+  }, function() {
 
+    // Add a maker
+    map.addMarker({
+      position: {lat: 37.422359, lng: -122.084344},
+      title: "Welecome to \n" +
+             "Cordova GoogleMaps plugin for iOS and Android",
+      snippet: "This plugin is awesome!",
+      animation: plugin.google.maps.Animation.BOUNCE
+    }, function(marker) {
+
+      // Show the info window
+      marker.showInfoWindow();
+
+      // Catch the click event
+      marker.on(plugin.google.maps.event.INFO_CLICK, function() {
+
+        // To do something...
+        alert("Hello world!");
+
+      });
+    });
+  });
+}
 </script>
+    
+    
+    
 
 
 
