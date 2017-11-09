@@ -1,54 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript">
-   var div = document.getElementById("map_canvas");
-var map = plugin.google.maps.Map.getMap(div);
-map.one(plugin.google.maps.event.MAP_READY, function() {
+    <script type="text/javascript" src="js/starbucks_hawaii_stores.json"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</head>
 
-  var onSuccess = function(location) {
-    var msg = ["Current your location:\n",
-      "latitude:" + location.latLng.lat,
-      "longitude:" + location.latLng.lng,
-      "speed:" + location.speed,
-      "time:" + location.time,
-      "bearing:" + location.bearing].join("\n");
+<body>
+    <div id="map_canvas">
+        <span id="label" style="background-color:white;padding:.5em;font-size:125%;position:fixed;right:0;top:0;"></span>
+        <button id="removeClusterBtn" style="position:fixed;bottom:0;right:0;padding:.5em;font-size:125%;">markerCluster.remove()</button>
+    </div>
 
+</body>
 
-    map.addMarker({
-      'position': location.latLng,
-      'title': msg
-    }, function(marker) {
-      marker.showInfoWindow();
-      map.animateCamera({
-        target: location.latLng,
-        zoom: 16
-      }, function() {
-        marker.showInfoWindow();
-      });
-    });
-  };
-
-  var onError = function(msg) {
-    alert(JSON.stringify(msg));
-  };
-
-  var button = div.getElementsByTagName('button')[0];
-  button.addEventListener('click', function() {
-    map.clear();
-    map.getMyLocation(onSuccess, onError);
-  });
-
-});
-    </script>
-  </head>
-  <body>
-    <h3>cordova-googlemaps-plugin</h3>
-    <div class="map" id="map_canvas">
-    <span class="smallPanel"><button>Click here</button></span>
-</div>
-  </body>
 </html>
